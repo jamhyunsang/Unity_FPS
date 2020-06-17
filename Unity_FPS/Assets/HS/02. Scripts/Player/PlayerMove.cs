@@ -10,6 +10,14 @@ public class PlayerMove : MonoBehaviour
     //캐릭터 컴포넌트 변수
     private CharacterController character;
 
+    //중력
+    public float gravity = -20;
+    //낙하 속도 (방향과 힘을 들고 있다)
+    float velocityY;
+
+    float jumpPower = 10.0f;
+
+    int jumpCount;
 
     void Start()
     {
@@ -46,6 +54,44 @@ public class PlayerMove : MonoBehaviour
         //transform.Translate(dir * speed * Time.deltaTime);
 
         //심각한 문제 : 하늘 날라다님, 땅뚫음, 충돌처리 안됨
-        character.Move(dir*speed*Time.deltaTime);
+        //character.Move(dir*speed*Time.deltaTime);
+
+        
+        
+
+        //캐릭터 점프 
+        //점프버튼을 누르면 수직 속도에 점프 파워를 넣는다.
+        //땅에 닿을때 velocityY 0으로 초기화
+
+        //땅에 닿았는지
+        //if(character.isGrounded)
+        //{
+        //    velocityY = 0;
+        //}
+
+
+        //CollisionFlags.Above;머리부분
+        //CollisionFlags.Below;다리부분
+        //CollisionFlags.Sides;몸통부분
+
+        //땅을 밟았을때
+        if(character.collisionFlags==CollisionFlags.Below)
+        {
+            velocityY = 0;
+            jumpCount = 0;
+        }
+        //땅을 밟지 않았을때
+        else
+        {
+            velocityY += gravity * Time.deltaTime;
+            dir.y = velocityY;
+        }
+        //점프키를 누를때
+        if (Input.GetButtonDown("Jump") && jumpCount < 2)
+        {
+            jumpCount++;
+            velocityY = jumpPower;
+        }
+        character.Move(dir * speed * Time.deltaTime);
     }
 }
