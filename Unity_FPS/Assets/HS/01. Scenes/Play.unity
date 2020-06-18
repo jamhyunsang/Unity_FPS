@@ -740,13 +740,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bd6cbb0a05668a48be2e040650f9903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
-  target: {fileID: 466993100}
-  targetDistance: 20
-  attackDistacne: 1
-  chaserDistance: 30
-  speed: 5
-  hp: 100
+  findRange: 15
+  moveRange: 30
+  attackRange: 2
 --- !u!1 &1604480559
 GameObject:
   m_ObjectHideFlags: 0

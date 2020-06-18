@@ -7,10 +7,10 @@ using UnityEngine;
 public class PlayerFire : MonoBehaviour
 {
 
-
+    
     public GameObject bulletImpactFactory;
     public GameObject bombFactory;
-
+    
     public GameObject firePos;
 
     void Start()
@@ -26,17 +26,18 @@ public class PlayerFire : MonoBehaviour
     }
 
     //발사 함수
-    private void Fire()
+    public void Fire()
     {
         //마우스 왼쪽 버튼 클릭시 레이 캐스트로 총알 발사
         if(Input.GetMouseButtonDown(0))
         {
-            //레이저
-            Ray ray = new Ray(Camera.main.transform.position,Camera.main.transform.forward);
-            //레이저 맞은 충돌
+            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
             RaycastHit hitInfo;
             if (Physics.Raycast(ray,out hitInfo))
             {
+                EnemyFSM enemy = hitInfo.collider.GetComponent<EnemyFSM>();
+                enemy.hitDamage(10);
+
                 //중돌 지점 총알 이펙트 생성
                 GameObject bulletImpact = Instantiate(bulletImpactFactory);
                 bulletImpact.transform.position = hitInfo.point;
